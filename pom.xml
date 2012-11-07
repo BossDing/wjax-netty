@@ -44,21 +44,6 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-Xbootclasspath/p:${settings.localRepository}/org/mortbay/jetty/npn/npn-boot/${npn.version}/npn-boot-${npn.version}.jar</argument>
-                        <argument>-classpath</argument>
-                        <classpath/>
-                        <argument> me.normanmaurer.javamagazin.netty.wjax.spdy.SpdyServer</argument>
-                        <argument>${port}</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -68,27 +53,9 @@
             <artifactId>netty</artifactId>
             <version>${netty.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-example</artifactId>
-            <version>${netty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.npn</groupId>
-            <artifactId>npn-api</artifactId>
-            <version>${npn.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty.npn</groupId>
-            <artifactId>npn-boot</artifactId>
-            <version>${npn.version}</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
     <properties>
         <target.jdk>1.7</target.jdk>
-        <netty.version>4.0.0.Alpha7-SNAPSHOT</netty.version>
-        <npn.version>8.1.2.v20120308</npn.version>
-        <port>8888</port>
+        <netty.version>4.0.0.Alpha7</netty.version>
     </properties>
 </project>
