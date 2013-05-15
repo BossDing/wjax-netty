@@ -50,12 +50,12 @@
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty</artifactId>
+            <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
         </dependency>
     </dependencies>
     <properties>
         <target.jdk>1.7</target.jdk>
-        <netty.version>4.0.0.Alpha7</netty.version>
+        <netty.version>4.0.0.CR2</netty.version>
     </properties>
 </project>

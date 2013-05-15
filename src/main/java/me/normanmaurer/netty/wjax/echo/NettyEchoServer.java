@@ -7,9 +7,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundByteHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioEventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.oio.OioEventLoopGroup;
+import io.netty.channel.oio.OioEventLoopGroup;
 import io.netty.channel.socket.oio.OioServerSocketChannel;
 
 import java.net.InetSocketAddress;
@@ -21,9 +21,10 @@ public class NettyEchoServer {
 
     public static void main(String[] args) throws Exception {
         ServerBootstrap b = new ServerBootstrap();
+        NioEventLoopGroup group = new NioEventLoopGroup(8);
         try {
-            b.group(new OioEventLoopGroup(), new OioEventLoopGroup())
-                    .channel(OioServerSocketChannel.class)
+            b.group(group, group)
+                    .channel(NioServerSocketChannel.class)
                     .localAddress(new InetSocketAddress(8888))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
@@ -36,7 +37,7 @@ public class NettyEchoServer {
 
             f.channel().closeFuture().sync();
         } finally {
-            b.shutdown();
+            group.shutdownGracefully();
         }
     }
 
@@ -49,8 +50,7 @@ public class NettyEchoServer {
         @Override
         public void inboundBufferUpdated(ChannelHandlerContext ctx, ByteBuf in) {
             ByteBuf out = ctx.nextOutboundByteBuffer();
-            out.discardReadBytes();
-            out.writeBytes(in);
+            out.discardReadBytes().writeBytes(in);
             ctx.flush();
         }
 
